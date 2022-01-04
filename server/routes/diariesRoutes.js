@@ -11,6 +11,6 @@ const {
 
 router.route("/").get(getDiaries).post(createDiary);
 router.route("/:id").get(getDiary).patch(updateDiary).delete(deleteDiary);
-router.route("/:id/likePost").patch(likeDiary);
+router.route("/:id/likediary").patch(likeDiary);
 
 module.exports = router;
