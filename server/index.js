@@ -1,8 +1,10 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3030;
 const cors = require("cors");
+const diariesRouter = require("./routes/diariesRoutes");
 
 // Middleware: used to parse JSON bodies
 app.use(express.json());
@@ -13,22 +15,22 @@ app.use(cors());
 
 // Routes
 app.get("/", (req, res) => {
-	res.send("<h1>Diary API</h1><a href='/api/diaries'>Diaries-API</a>");
+	res.send("<h1>Diary API</h1><a href='/diaries-api'>Diaries-API</a>");
 });
 
+app.use("/diaries-api", diariesRouter);
 // middlewares : page not found/ error-handler
 // app.use(notFoundMiddleware);
 // app.use(errorHandlerMiddleware);
 
-const start = async () => {
-	try {
-		//connectDB
-		app.listen(PORT, (req, res) => {
-			console.log(`app on ${PORT}`);
-		});
-	} catch (error) {
-		console.log(error);
-	}
-};
-
-start();
+mongoose
+	.connect(process.env.MONGO_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+	.then(() =>
+		app.listen(PORT, () =>
+			console.log(`Server on port: http://localhost:${PORT}`)
+		)
+	)
+	.catch((error) => console.log(error.message));
