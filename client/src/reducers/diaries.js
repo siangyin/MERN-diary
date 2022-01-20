@@ -1,15 +1,15 @@
 
 export default (posts = [], action) => {
 	switch (action.type) {
-		case FETCH_ALL:
-			return posts
-		case LIKE:
+		case "FETCH_ALL":
+			return action.payload;
+		case "LIKE":
 			return posts;
-		case CREATE:
+		case "CREATE":
 			return posts;
-		case UPDATE:
+		case "UPDATE":
 			return posts;
-		case DELETE:
+		case "DELETE":
 			return posts;
 		default:
 			return posts;
